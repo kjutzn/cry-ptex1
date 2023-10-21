@@ -7,7 +7,7 @@ script_path="$(cd "$(dirname "$0")" && pwd)"
 echo "== Cry Ptex1 =="
 echo "Made by Kjutzn"
 echo "Thanks to Orangera1n, VeryGenericName (ssh)"
-echo "This tool DOES NOT work on iPhone X!"
+echo "This tool DOES NOT work on iPhone X, due to sep breaking restores."
 
 echo
 
@@ -46,7 +46,6 @@ else
     fi
 fi
 
-## SSHRD exists and it is up to date! Script can continue.
 
 echo "Do you have activation files? (y/n)"
 read act_have
@@ -54,9 +53,10 @@ read act_have
 if [ "$act_have" = "y" ]; then
         echo "Copy them to: $script_path/activation"
         cd $script_path/activation
-        ls 
+        
 
     else
-        echo "Exiting the program."
-        exit 100
+        echo "Plug you device and trust it"
+
+
     fi
