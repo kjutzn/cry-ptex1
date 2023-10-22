@@ -101,8 +101,9 @@ if [ "$act_have" = "y" ]; then
 
         echo "[*] Connecting to your device. Downloading Fairplay folder... "
         sleep 1
-        sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/mobile/Library/Fairplay "$script_path/Activation"
+        ##sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/mobile/Library/Fairplay "$script_path/Activation"
         ## add check
+        echo "[!] Failed downloading FairPlay folder. You will have to manually download it using FileZilla."
 
         sleep 5
 
@@ -116,6 +117,6 @@ if [ "$act_have" = "y" ]; then
         sleep 5
 
         echo "[*] Open FileZilla and connect to your iDevice with video guide(It is in GitHub repo."
-        sleep 
+        sleep 60
 
 fi
