@@ -17,7 +17,7 @@ read ios1
 ##echo
 
 if [ -d "$script_path/SSHRD_Script" ]; then
-    ##echo "The folder SSHRD_Script exists in the script's directory."
+    echo "The folder SSHRD_Script exists in the script's directory."
     cd "$script_path/SSHRD_Script" && git pull
 
 else
@@ -53,10 +53,8 @@ echo "[?] Do you have activation files? (y/n)"
 read act_have
 
 if [ "$act_have" = "y" ]; then
-        cd $script_path && mkdir Actiation 
-        echo "[*] Copy them to: $script_path/Actiation"
-        cd $script_path/activation
-        
+        cd $script_path && mkdir Activation 
+        echo "[*] Copy them to: $script_path/Activation"        
 
     else
         echo
@@ -64,10 +62,10 @@ if [ "$act_have" = "y" ]; then
 
         echo
         echo "[!] New terminal window should pop up, follow instructions on entering DFU Mode"
-        osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
+        ##osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
 
-        cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
-        cd $script_path/SSHRD_Script && ./sshrd.sh boot
+        ##cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
+        ##cd $script_path/SSHRD_Script && ./sshrd.sh boot
 
         cd $script_path && mkdir Actiation
 
@@ -85,7 +83,7 @@ if [ "$act_have" = "y" ]; then
         
         else
             echo "Trying without reseting known_hosts!"
-    fi
+        fi
 
         sleep 5
 
@@ -95,21 +93,18 @@ if [ "$act_have" = "y" ]; then
         echo "[!] Do not close it"
         echo
 
-
-
-        sleep 10
+        sleep 15
 
         echo "[*] Connecting to your device. Downloading Fairplay folder... "
         sleep 1
-        ##sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/mobile/Library/Fairplay "$script_path/Activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/Activation"
         ## add check
-        echo "[!] Failed downloading FairPlay folder. You will have to manually download it using FileZilla."
 
         sleep 5
 
         echo "[*] Downloading commcenter.device_specific_nobackup.plist "
         sleep 1
-        sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/Activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/Activation"
         ## add check
         sleep 5
 
@@ -117,6 +112,48 @@ if [ "$act_have" = "y" ]; then
         sleep 5
 
         echo "[*] Open FileZilla and connect to your iDevice with video guide(It is in GitHub repo."
-        sleep 60
+        sleep 5
+        if
+    fi
+fi
 
+echo "If you prepared activation files, you can futurerestore to desired 14/15 version."
+
+echo "Continue? (y/n)"
+read preparedact
+
+if [ "$preparedact" = "y" ]; then
+    sudo chmod -R 755 $script_path/Activation
+    wait 3
+
+    echo "Creating FakeFS follow Palera1n Instructions in new terminal window. "
+    osascript -e "tell application \"Terminal\" to do script \"palera1n -c -f\""
+    wait 3
+
+    echo "Enter y when FakeFS finishes creating. "
+    read fakefsdone
+    wait 1
+
+    if [ "$fakefsdone" = "y" ]; then
+    echo "Please enter what version did you downgrade to: "
+    read _iosdowngraded
+    wait 3
+
+    echo "[*] Creating ramdisk for $_iosdowngraded"
+
+    cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $_iosdowngraded
+    wait 3
+
+    echo "[*] Booting ramdisk"
+    cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh boot
+    wait 3
+
+
+    else
+        echo "Exiting"
+    fi
+
+    else
+        echo "Exiting"
+    fi
 fi
