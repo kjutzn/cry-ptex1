@@ -162,6 +162,7 @@ if [ "$preparedact" = "y" ]; then
 
     echo
     echo "[*] Terminal window should pop up, follow instructions from 3. Activating "
+    osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
     sleep 120
     exit 1
 
