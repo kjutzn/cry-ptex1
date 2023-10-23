@@ -5,7 +5,7 @@
 2. A11 device (No point of using this on a10 and less)
 
 # Disclamer
-I am very aware people might use this to bypass icloud, but I am NOT encouraging you to bypass iCloud.
+I am very aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is legitametly activating it!
 ALSO: THIS IS RECOMMENDED FOR ADVANCED USERS ONLY, i am not responsable if your device becomes broken (idk how but just in case)
 
 # Usage
