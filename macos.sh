@@ -10,31 +10,31 @@ echo
 echo "Please open the guide in another tab and follow it!"
 echo "If you need any help or run into any problems, open an issue on GitHub or contact me on Discord."
 
-echo "What version is your iPhone on?"
+echo "[?] What version is your iDevice on?"
 read ios1
 
 ##echo $script_path
 ##echo
 
 if [ -d "$script_path/SSHRD_Script" ]; then
-    echo "The folder SSHRD_Script exists in the script's directory."
+    echo "[*] SSHRD_Script exists in the script's directory."
     cd "$script_path/SSHRD_Script" && git pull
 
 else
-    echo "The folder SSHRD_Script does not exist in the script's directory. Exiting the program."
-    echo "This tool depends on SSHRD_Script by Nathan."
+    echo "[!] The folder SSHRD_Script does not exist in the script's directory. Exiting the program."
+    echo "[!] This tool depends on SSHRD_Script by Nathan."
     echo
 
-    echo "Do you want to install it now? (y/n)"
+    echo "[?] Do you want to install it now? (y/n)"
     read installsshrd
 
     if [ "$installsshrd" = "y" ]; then
-        echo "Cloning SSHRD_Script... Please wait!"
+        echo "[*] Cloning SSHRD_Script... Please wait!"
         git clone https://github.com/verygenericname/SSHRD_Script --recursive
         cd "$script_path/SSHRD_Script" && git pull
 
     else
-        echo "Exiting"
+        echo "[*] Exiting"
         exit 100
     fi
 fi
@@ -56,16 +56,18 @@ if [ "$act_have" = "y" ]; then
         cd $script_path && mkdir Activation 
         echo "[*] Copy them to: $script_path/Activation"        
 
-    else
+else
         echo
         echo "[*] Plug you device and trust it"
 
         echo
         echo "[!] New terminal window should pop up, follow instructions on entering DFU Mode"
-        ##osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
+        osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
 
-        ##cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
-        ##cd $script_path/SSHRD_Script && ./sshrd.sh boot
+        sleep 4
+        cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
+        echo "[*] Booting ramdisk"
+        cd $script_path/SSHRD_Script && ./sshrd.sh boot
 
         cd $script_path && mkdir Actiation
 
@@ -75,12 +77,16 @@ if [ "$act_have" = "y" ]; then
 
         sleep 3
 
+        echo "[*] This part of script resets known_hosts to avoid any ssh issues. "
+        echo "[?] Is that alright? (y/n)"
+        read resethosts
+
         if [ "$resethosts" = "y" ]; then
             echo "Please enter your username(of this mac): "
             read usernamemac
 
             rm -rf /Users/$usernamemac/.ssh/known_hosts
-        
+            
         else
             echo "Trying without reseting known_hosts!"
         fi
@@ -110,50 +116,55 @@ if [ "$act_have" = "y" ]; then
 
         echo "[*] Check if Fairplay folder and com.apple.commcenter.device_specific_nobackup.plist exist in Activation folder!"
         sleep 5
-
-        echo "[*] Open FileZilla and connect to your iDevice with video guide(It is in GitHub repo."
-        sleep 5
-        if
-    fi
+        
+        echo
+        echo "[*] This part needs to be done manually. Guide is in GitHub repo. "
+        echo "[*] Open FileZilla and follow the guide. "
+        sleep 10
+    
 fi
 
-echo "If you prepared activation files, you can futurerestore to desired 14/15 version."
+echo "[*] If you prepared activation files, you can futurerestore to desired 14/15 version."
+echo
 
-echo "Continue? (y/n)"
+echo "[?] Continue? (y/n)"
 read preparedact
 
 if [ "$preparedact" = "y" ]; then
     sudo chmod -R 755 $script_path/Activation
-    wait 3
+    sleep 3
 
-    echo "Creating FakeFS follow Palera1n Instructions in new terminal window. "
+    echo "[*] Creating FakeFS follow Palera1n Instructions in new terminal window. "
     osascript -e "tell application \"Terminal\" to do script \"palera1n -c -f\""
-    wait 3
+    sleep 3
 
-    echo "Enter y when FakeFS finishes creating. "
+    echo "[!] Enter y when FakeFS finishes creating. "
     read fakefsdone
-    wait 1
+    sleep 1
+    
+    else
+    exit 101
+    fi
 
     if [ "$fakefsdone" = "y" ]; then
     echo "Please enter what version did you downgrade to: "
     read _iosdowngraded
-    wait 3
+    sleep 3
 
     echo "[*] Creating ramdisk for $_iosdowngraded"
 
     cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $_iosdowngraded
-    wait 3
+    sleep 3
 
     echo "[*] Booting ramdisk"
     cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh boot
-    wait 3
+    sleep 3
 
+    echo
+    echo "[*] Terminal window should pop up, follow instructions from 3. Activating "
+    sleep 120
+    exit 1
 
     else
-        echo "Exiting"
-    fi
-
-    else
-        echo "Exiting"
-    fi
+    exit 102
 fi
