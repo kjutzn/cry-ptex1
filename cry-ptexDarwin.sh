@@ -91,15 +91,17 @@ else
             echo "Trying without reseting known_hosts!"
         fi
 
-        sleep 5
+        sleep 2
 
         echo "[*] You might have to press allow for opening new terminal window"
         osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
-        echo "[*] Switch to opened terminal and enter this command: mount_filesystems "
-        echo "[!] Do not close it"
+        echo "[!] Do not close opened Terminal window"
         echo
 
-        sleep 15
+        
+        echo "[*] Mounting filesystems"
+        ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_filesystems
+        sleep 3
 
         echo "[*] Connecting to your device. Downloading Fairplay folder... "
         sleep 1
@@ -113,6 +115,15 @@ else
         ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/Activation"
         ## add check
         sleep 5
+
+        ##echo "[*] Downloading internal"
+        ##./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /mnt2/containers/Data/System
+        ##ACT1=$(./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /mnt2/containers/Data/System -name internal)
+        ##echo $ACT2 ACT3=$ACT2/Library/internal/data_ark.plist
+        ##sleep 1
+        ##./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT2 "$script_path/Activation"
+        ## add check
+        ##sleep 5
 
         echo "[*] Check if Fairplay folder and com.apple.commcenter.device_specific_nobackup.plist exist in Activation folder!"
         sleep 5
@@ -162,7 +173,6 @@ if [ "$preparedact" = "y" ]; then
 
     echo
     echo "[*] Terminal window should pop up, follow instructions from 3. Activating "
-    osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
     sleep 120
     exit 1
 
