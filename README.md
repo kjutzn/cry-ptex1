@@ -13,7 +13,8 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 1. Clone and cd into this repository: `git clone https://github.com/kjutzn/cry-ptex1 --recursive && cd cry-ptex1`
     - If you have cloned this before, run `cd cry-ptex1 && git pull` to pull new changes
 2. Run `./macos.sh `
-
+# Help
+If you run into any issues, message me on Discord server, here is the [link](https://discord.gg/sRyRk3eFpj)
 # Credits
 
 - [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) for guide on how to activate futurerestored idevice on ios 15
