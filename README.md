@@ -1,12 +1,13 @@
-<h1 align="center">FutureRestoring A11 Guide</h1>
+# FutureRestoring A11 Guide
 
 # Prerequsites
 1. A computer running macOS
 2. A11 device (No point of using this on a10 and less)
 
 # Disclamer
-I am very aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is legitametly activating it!
-ALSO: THIS IS RECOMMENDED FOR ADVANCED USERS ONLY, i am not responsable if your device becomes broken (idk how but just in case)
+This script is for educational purposes. I am aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is **legitametly** activating it!
+
+ALSO: This script is for advanced users, i am not responsable if your device becomes broken (idk how but just in case)
 
 # Usage
 1. Clone and cd into this repository: `git clone https://github.com/kjutzn/cry-ptex1 --recursive && cd cry-ptex1`
