@@ -25,7 +25,7 @@ read ios1
 
 if [ -d "$script_path/SSHRD_Script" ]; then
     echo "[*] SSHRD_Script exists in the script's directory."
-    ##cd "$script_path/SSHRD_Script" && git pull
+    cd "$script_path/SSHRD_Script" && git pull
 
 else
     echo "[!] The folder SSHRD_Script does not exist in the script's directory. Exiting the program."
@@ -70,59 +70,60 @@ else
 
         echo
         echo "[!] New terminal window should pop up, follow instructions on entering DFU Mode"
-        ##osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
+        osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
 
-        ##sleep 2
-        ##cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
+        sleep 2
+        cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
         echo "[*] Booting ramdisk"
-        ##cd $script_path/SSHRD_Script && ./sshrd.sh boot
+        cd $script_path/SSHRD_Script && ./sshrd.sh boot
 
         cd $script_path
 
         chmod +x "$script_path"/SSHRD_Script/Darwin/iproxy
         chmod +x "$script_path"/SSHRD_Script/Darwin/sshpass
         chmod +x "$script_path"/sshpass
+        chmod +x "$script_path"/activate.sh
 
-       ## sleep 3
+        sleep 3
 
         echo "[*] This part of script resets known_hosts to avoid any ssh issues. "
         echo "[?] Is that alright? (y/n)"
-        ##read resethosts
+        read resethosts
 
         if [ "$resethosts" = "y" ]; then
             echo "Please enter your username(of this mac): "
             read usernamemac
 
-            ##rm -rf /Users/$usernamemac/.ssh/known_hosts
+            rm -rf /Users/$usernamemac/.ssh/known_hosts
             
         else
             echo "Trying without reseting known_hosts!"
         fi
 
-        ##sleep 2
+        sleep 2
 
         echo "[*] You might have to press allow for opening new terminal window"
-        ##osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
+        osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
         echo "[!] Do not close opened Terminal window"
         echo
 
         
         echo "[*] Mounting filesystems"
-        ##./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_filesystems
-        ##sleep 3
+        ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_filesystems
+        sleep 3
 
         echo "[*] Connecting to your device. Downloading Fairplay folder... "
         sleep 1
-        ##./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/activation"
         ## add check
 
-        ##sleep 5
+        sleep 5
 
         echo "[*] Downloading commcenter.device_specific_nobackup.plist "
         sleep 1
-        ##./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/activation"
         ## add check
-        ##sleep 5
+        sleep 5
 
         echo "[*] Downloading internal"
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /mnt2/containers/Data/System
