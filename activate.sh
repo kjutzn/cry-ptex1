@@ -1,3 +1,11 @@
+script_path="$(cd "$(dirname "$0")" && pwd)"
+
+echo "[*] Terminating all processes that use port 2222"
+kill -9 $(lsof -ti:2222)
+sleep 1
+echo "[*] Opened new terminal window, DO NOT close it"
+osascript -e "tell application \"Terminal\" to do script \"$script_path/iproxy 2222 22\""
+
 echo "[*] Known hosts will get reseted. If you aren't alright with that close this script"
 sleep 3
 
@@ -118,3 +126,7 @@ echo "[*] Userspace rebooting"
 
 sleep 2
 echo "[*] Script done, your device should be in homescreen"
+echo "[*] You can sign in into iCloud now, also if you set passcode you will have to restore if you want to jailbreak with Palera1n again"
+sleep 2
+
+exit 1
