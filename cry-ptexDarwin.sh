@@ -1,12 +1,5 @@
 #!/bin/bash
 
-rmrfinternal() {
-    ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222
-    ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /var/containers/Data/System
-    ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /private/var/containers/Data/System -type d -name internal -prune -o -exec rm -rf {} \; 
-}
-
-
 script_path="$(cd "$(dirname "$0")" && pwd)"
 
 echo "== Cry ptex1 =="
