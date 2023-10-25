@@ -11,11 +11,10 @@ script_path="$(cd "$(dirname "$0")" && pwd)"
 
 echo "== Cry ptex1 =="
 echo "Made by Kjutzn"
-echo "Thanks to Orangera1n, VeryGenericName (ssh), Palera1n"
+echo "Thanks to Orangera1n, VeryGenericName (ssh), Palera1n, OpenAI"
 echo "This tool DOES NOT work on iPhone X, due to sep breaking restores."
-echo
-echo "Please open the guide in another tab and follow it!"
 echo "If you need any help or run into any problems, open an issue on GitHub or contact me on Discord."
+echo
 
 echo "[?] What version is your iDevice on?"
 read ios1
@@ -235,7 +234,7 @@ if [ "$fakefsdone" = "y" ]; then
     ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 ldid -Sents.xml /mnt8/usr/libexec/mobileactivationd
     sleep 2
 
-    echo "[*] Device should reboot"
+    echo "[*] Device should reboot, also do not set passcode or sign in into icloud yet"
     ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 reboot
     sleep 6
     echo "[*] Now you need to follow guide in other terminal window with instructions on jailbreaking with palera1n"
@@ -317,7 +316,9 @@ if [ "$fakefsdone" = "y" ]; then
                         exit 106
                         fi
                     else
-                        rmrfinternal
+                        ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /var/containers/Data/System
+                        ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /private/var/containers/Data/System -type d -name internal -prune -o -exec rm -rf {} \; 
+
                     fi
 
                     sleep 5
