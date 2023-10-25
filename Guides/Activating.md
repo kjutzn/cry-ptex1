@@ -1,3 +1,5 @@
+# Troubleshooting
+
 If you want to do this script manually, follow Orangera1n's guide
 Link to it is here:
 https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225
