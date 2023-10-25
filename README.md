@@ -2,7 +2,7 @@
 
 # Prerequsites
 1. A computer running macOS
-2. A11 device
+2. A11 device(iPhone X **isn't** supported)
 3. Patience
 
 # Disclamer
@@ -17,7 +17,7 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 
 # Have in mind before using
 1. If you are already on iOS 15.0-15.4.1 or any 14.x version, i wouldn't advise you to use this script, check PossibleIssues.md in Guides folder
-2. Also if signing in into iCloud doesn't work try grabing new activation files and redoing whole script
+2. Also if signing in into iCloud doesn't work try grabing new activation files(from latest iOS 16 version) and redoing whole script
 
 # Help
 If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/sRyRk3eFpj)
@@ -25,5 +25,5 @@ If you run into any issues, message me on Discord server, here is the [invite](h
 # Credits
 - [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) for guide on how to activate futurerestored idevice on ios 15
 - [Nathan](https://github.com/verygenericname/SSHRD_Script) - SSHRD script
-- [Palera1n](https://github.com/palera1n/palera1n) - Used when creating fakeFS
+- [Palera1n](https://github.com/palera1n/palera1n) - Used when creating fakefs
 - [OpenAI](https://chat.openai.com/chat) for helping me with fixing the code
