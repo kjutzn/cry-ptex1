@@ -22,6 +22,9 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 # Help
 If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/sRyRk3eFpj)
 
+# Linux
+Support for linux will be added most likely next month, but until them you can replace binaries manually
+
 # Credits
 - [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) for guide on how to activate futurerestored idevice on ios 15
 - [Nathan](https://github.com/verygenericname/SSHRD_Script) - SSHRD script
