@@ -139,7 +139,15 @@ else
         ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/activation/activation_records"
         sleep 2
         cp "$script_path/activation/activation_records/activation_record.plist" "$script_path/activation/"
-        ## add check
+        
+        sleep 2
+        
+        if [ -e "$script_path/activation/activation_records/activation_record.plist" ]; then
+            echo "[*] activation_record.plist downloaded successfully"
+        else
+            echo "[!] activation_record.plist failed downloading"
+        fi
+        
         sleep 1
 
         echo "[*] Check if Fairplay folder, com.apple.commcenter.device_specific_nobackup.plist, activation_record.plist  exist in activation folder!"
