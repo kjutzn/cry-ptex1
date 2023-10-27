@@ -27,6 +27,7 @@ Support for linux will be added most likely next month, but until them you can r
 
 # Credits
 - [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) for guide on how to activate futurerestored idevice on ios 15
+- [Edwin](https://github.com/edwin170) Guided me thru this script and helped me fix it
 - [Nathan](https://github.com/verygenericname/SSHRD_Script) - SSHRD script
 - [Palera1n](https://github.com/palera1n/palera1n) - Used when creating fakefs
 - [OpenAI](https://chat.openai.com/chat) for helping me with fixing the code
