@@ -12,7 +12,7 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 # Usage
 1. Clone and cd into this repository: `git clone https://github.com/kjutzn/cry-ptex1 --recursive && cd cry-ptex1`
     - If you have cloned this before, run `cd cry-ptex1 && git pull` to pull new changes
-2. Run `./preparing.sh `
+2. Run `./grabbingFiles.sh `
 3. After it finishes run `./activate.sh`
 
 # Have in mind before using
@@ -26,8 +26,7 @@ If you run into any issues, message me on Discord server, here is the [invite](h
 Support for linux will be added most likely next month, but until them you can replace binaries manually
 
 # Credits
-- [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) for guide on how to activate futurerestored idevice on ios 15
-- [Edwin](https://github.com/edwin170) Guided me thru this script and helped me fix it
+- [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) - Guide about activativating futurerestored idevices on ios 15
 - [Nathan](https://github.com/verygenericname/SSHRD_Script) - SSHRD script
+- [Edwin](https://github.com/edwin170) - Guided me thru this script and helped me fix few things in it
 - [Palera1n](https://github.com/palera1n/palera1n) - Used when creating fakefs
-- [OpenAI](https://chat.openai.com/chat) for helping me with fixing the code
