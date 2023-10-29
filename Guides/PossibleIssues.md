@@ -6,10 +6,10 @@ This issue happened to me when i was doing this script for first time, but in se
 ## 2. Unable to open passwords in settings
 I haven't found fix for this, but it mighr not happen to you
 
-## 2. Man in the middle attack
+## 3. Man in the middle attack
 This issue happens when known_hosts weren't reseted after changing between OpenSSH and ./sshrd ssh
 
-## 3. Can't jailbreak anymore
+## 4. Can't jailbreak anymore
 If you have set passcode you will have to restore since it has iOS 16 SEP and it requires to do that
 
 ## Disclamer
