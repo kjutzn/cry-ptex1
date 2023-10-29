@@ -16,7 +16,7 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 3. After it finishes run `./activate.sh`
 
 # Have in mind before using
-1. If you are already on iOS 15.0-15.4.1 or any 14.x version, i wouldn't advise you to use this script, check [PossibleIssues.md](https://github.com/kjutzn/cry-ptex1/blob/main/Guides/PossibleIssues.md) in Guides folder
+1. If you are already on iOS 15.0-15.4.1 or any 14.x version, i wouldn't advise you to use this script, check [Possible Issues](https://github.com/kjutzn/cry-ptex1/blob/main/Guides/PossibleIssues.md) in Guides folder
 2. Also if signing in into iCloud doesn't work try grabing new activation files(from latest iOS 16 version) and redoing whole script
 
 # Help
