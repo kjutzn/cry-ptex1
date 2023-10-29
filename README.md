@@ -20,7 +20,7 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 2. Also if signing in into iCloud doesn't work try grabing new activation files(from latest iOS 16 version) and redoing whole script
 
 # Help
-If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/sRyRk3eFpj)
+If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/buPefAxnVn)
 
 # Linux
 Support for linux will be added most likely next month, but until them you can replace binaries manually
