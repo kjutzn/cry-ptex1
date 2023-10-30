@@ -79,7 +79,7 @@ if [ "$fakefsdone" = "y" ]; then
     sleep 6
     echo "[*] Now you need to follow guide in another terminal window with instructions on jailbreaking with palera1n"
     
-    osascript -e "tell application \"Terminal\" to do script \"palera1n -f\""
+    sascript -e "tell application \"Terminal\" to do script \"palera1n -f\""
     echo "[*] Opened new Terminal window"
     echo "[*] Also if you are on Apple Silicon Mac, you need to replug the lightning cable when you see the Apple logo on the device"
     sleep 3
@@ -90,7 +90,7 @@ if [ "$fakefsdone" = "y" ]; then
     if [ "$finishedjb1" = "y" ]; then
 
         echo "[*] Then complete setup as normal, and use the palera1n loader to install Sileo"
-        echo "[!] You MUST set the password for sudo commands in palera1n to: alpine"
+        echo "[!] You MUST set the password for sudo commands in palera1n to 'alpine' "
         echo "[*] After Bootstrap finishes downloading, open Sileo and install openssh."
         sleep 3
 
@@ -111,12 +111,18 @@ if [ "$fakefsdone" = "y" ]; then
             echo " "
         fi
 
-        if [ "$basebandyn" = "y" ]; then
-            cd $script_path && ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_apfs /dev/disk0s1s8 /mnt8
-        else
-            cd $script_path && ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_apfs /dev/disk0s1s7 /mnt8
-        fi
+        echo "[?] Does your device have Baseband? (y/n)"
+        echo "[*] Enter y if it isn't iPad"
+        sleep 1
+        read basebandyntwo
 
+        if [ "$basebandyntwo" = "y" ]; then
+            echo "[*] Mounting apfs" 
+            ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_apfs /dev/disk0s1s8 /mnt8
+        else
+            echo "[*] Mounting apfs" 
+            ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_apfs /dev/disk0s1s7 /mnt8
+        fi
 
         echo 
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mv /mnt8/usr/libexec/mobileactivationd_backup /mnt8/usr/libexec/mobileactivationd
@@ -134,8 +140,9 @@ if [ "$fakefsdone" = "y" ]; then
 
         echo
         echo "[*] Enter y when the device finishes jailbreaking"
+        read finishedjbtwo
 
-        if [ "$finishedjb1" = "y" ]; then
+        if [ "$finishedjbtwo" = "y" ]; then
             echo "[*] Resetting known_hosts"
             rm -rf /Users/$usernamemac/.ssh/known_hosts
             sleep 1
