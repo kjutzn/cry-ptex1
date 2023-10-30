@@ -3,6 +3,7 @@
 # Prerequsites
 1. A computer running macOS
 2. A11 device(iPhone X **isn't** supported)
+3. Installed [Palera1n](https://github.com/palera1n/palera1n)
 
 # Disclamer
 This script is for educational purposes. I am aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is **legitametly** activating it!
