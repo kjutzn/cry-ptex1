@@ -66,7 +66,7 @@ else
         echo "[!] New terminal window should pop up, follow instructions on entering DFU Mode"
         osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
 
-        sleep2
+        sleep 2
         cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
         echo "[*] Booting ramdisk"
         cd $script_path/SSHRD_Script && ./sshrd.sh boot
@@ -79,9 +79,10 @@ else
         chmod +x "$script_path"/sshpass
         chmod +x "$script_path"/activate.sh
         chmod +x "$script_path"/iproxy
+        chmod +x "$script_path"/futurerestored.sh
 
 
-        sleep3
+        sleep 3
 
         echo "[*] This part of script resets known_hosts to avoid any ssh issues. "
         echo "[?] Is that alright? (y/n)"
@@ -97,7 +98,7 @@ else
             echo "Trying without reseting known_hosts!"
         fi
 
-        sleep2
+        sleep 2
 
         echo "[*] You might have to press allow for opening new terminal window"
         osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
@@ -107,19 +108,26 @@ else
         
         echo "[*] Mounting filesystems"
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_filesystems
-        sleep 3
+        sleep 5
 
         echo "[*] Connecting to your device. Downloading Fairplay folder... "
         sleep 1
         ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/activation"
-         add check
 
-        sleep 5
+        ## check needs to be added
+
+        sleep 3
 
         echo "[*] Downloading commcenter.device_specific_nobackup.plist "
         sleep 1
         ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/activation"
-         add check
+
+        if [ -e "$script_path/activation/com.apple.commcenter.device_specific_nobackup.plist" ]; then
+            echo "[*] com.apple.commcenter.device_specific_nobackup.plist downloaded successfully"
+        else
+            echo "[!] com.apple.commcenter.device_specific_nobackup.plist failed downloading. Download it manually"
+        fi
+
         sleep 5
 
         echo "[*] Downloading internal"
@@ -128,7 +136,13 @@ else
         ACT3=$ACT1/data_ark.plist
         sleep 1
         ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT3 "$script_path/activation"
-         add check
+
+        if [ -e "$script_path/activation/data_ark.plist" ]; then
+            echo "[*] data_ark.plist downloaded successfully"
+        else
+            echo "[!] data_ark.plist failed downloading. Download it manually"
+        fi
+
         sleep 1
 
         echo "[*] Downloading activation_record.plist"
@@ -150,12 +164,12 @@ else
         if [ -e "$script_path/activation/activation_records/activation_record.plist" ]; then
             echo "[*] activation_record.plist downloaded successfully"
         else
-            echo "[!] activation_record.plist failed downloading"
+            echo "[!] activation_record.plist failed downloading. Download it manually"
         fi
         
         sleep 1
 
-        echo "[*] Check if Fairplay folder, com.apple.commcenter.device_specific_nobackup.plist, activation_record.plist  exist in activation folder!"
+        echo "[*] Check if Fairplay folder, com.apple.commcenter.device_specific_nobackup.plist, activation_record.plist exist in activation folder!"
         sleep 5
         
         echo
@@ -171,7 +185,7 @@ echo "[?] Continue? (y/n)"
 read preparedact
 
 if [ "$preparedact" = "y" ]; then
-    echo "[*] Starting ./futurerestored.sh, also copy activation folder to any location just in case"
+    echo "[*] Starting ./futurerestored.sh, also save activation folder just in case"
     echo "[*] Script is continuing in 10 seconds"
     sleep 10
     cd $script_path && ./futurerestored.sh
