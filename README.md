@@ -8,6 +8,7 @@
 # Disclamer
 This script is for educational purposes. I am aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is **legitametly** activating it!
 ALSO: This script is for advanced users, i am not responsable if your device becomes broken (idk how but just in case)
+This script resets known_hosts!!!!!
 
 # Usage
 1. Clone and cd into this repository: `git clone https://github.com/kjutzn/cry-ptex1 --recursive && cd cry-ptex1`
