@@ -7,8 +7,7 @@
 
 # Disclamer
 This script is for educational purposes. I am aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is **legitametly** activating it!
-ALSO: This script is for advanced users, i am not responsable if your device becomes broken (idk how but just in case)
-This script resets known_hosts!!!!!
+ALSO: This script is for advanced users, i am not responsable if your device becomes broken (idk how but just in case) or if your known_hosts get reseted. If you have important saved hosts in known_hosts file save them manually (script already saves it but this is just in case). 
 
 # Usage
 1. Clone and cd into this repository: `git clone https://github.com/kjutzn/cry-ptex1 --recursive && cd cry-ptex1`
@@ -18,7 +17,7 @@ This script resets known_hosts!!!!!
 
 # Have in mind before using
 1. If you are already on iOS 15.0-15.4.1 or any 14.x version, i wouldn't advise you to use this script, check [Possible Issues](https://github.com/kjutzn/cry-ptex1/blob/main/Guides/PossibleIssues.md) in Guides folder
-2. Also if signing in into iCloud doesn't work try grabing new activation files(from latest iOS 16 version) and redoing whole script
+2. Also if signing in into iCloud doesn't work try grabing new activation files (from latest iOS 16 version) and redoing whole script
 
 # Help
 If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/buPefAxnVn)
