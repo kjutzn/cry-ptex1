@@ -60,14 +60,17 @@ fi
 
 if [ ! -f "$script_path/sshpass" ]; then
     cp "$script_path/SSHRD_Script/Darwin/sshpass" "$script_path/"
-else
     printg " [*] Copying sshpass to script path (Will be needed for later)"
+else
+    cd $script_path
 fi
 
 if [ ! -f "$script_path/iproxy" ]; then
     cp "$script_path/SSHRD_Script/Darwin/iproxy" "$script_path/"
-else
     printg " [*] Copying iproxy to script path (Will be needed for later)"
+
+else
+    cd $script_path
 fi
 
 printg " [?] Do you have activation files? (y/n)"
