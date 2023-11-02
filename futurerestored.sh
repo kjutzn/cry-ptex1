@@ -2,7 +2,57 @@
 
 script_path="$(cd "$(dirname "$0")" && pwd)"
 
-echo "Terminal might ask for your password(for runnning sudo commands)"
+if [ ! -f "$script_path/sshpass" ]; then
+    cp "$script_path/SSHRD_Script/Darwin/sshpass" "$script_path/"
+    echo "[*] Copying sshpass to script path (Will be needed for later)"
+else
+    cd $script_path
+fi
+
+if [ ! -f "$script_path/iproxy" ]; then
+    cp "$script_path/SSHRD_Script/Darwin/iproxy" "$script_path/"
+    echo "[*] Copying iproxy to script path (Will be needed for later)"
+else
+    cd $script_path
+fi
+
+if [ -d "$script_path/knownhosts" ]; then
+    cd $script_path
+else
+    cd $script_path && mkdir knownhosts
+fi
+
+if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
+    echo "[!] Known hosts aren't saved in $script_path/knownhosts"
+
+    echo "[?] Do you want to save them manually or should script automatically save them? (m/a)"
+    read savehosts
+
+    if [ "$savehosts" = "a" ]; then
+        echo "[*] Saving automatically"
+        echo "[?] Please enter your username(of this mac): "
+        read usernamemac
+
+        cd $script_path && cp "/Users/$usernamemac/.ssh/known_hosts" "$script_path/"
+        sleep 2
+
+        cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
+        sleep 2
+    else
+        echo "[*] Save known_hosts manually. Script will sleep for 60 seconds. "
+        echo "[*] Also it is located in /Users/username/.ssh/known_hosts"
+        sleep 60
+    fi
+
+else
+    echo "[*] Known_hosts file is already saved."
+fi
+
+echo "[?] "
+sleep 50
+
+echo "[*] Script is repairing permissions for activation folder."
+echo "[*] Terminal might ask for your password (for runnning sudo commands)"
 sleep 1
 sudo chmod -R 755 $script_path/activation
 sleep 3
@@ -143,6 +193,7 @@ if [ "$fakefsdone" = "y" ]; then
         read finishedjbtwo
 
         if [ "$finishedjbtwo" = "y" ]; then
+
             echo "[*] Resetting known_hosts"
             rm -rf /Users/$usernamemac/.ssh/known_hosts
             sleep 1
