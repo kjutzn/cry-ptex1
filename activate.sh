@@ -129,4 +129,13 @@ echo "[*] Script done, your device should be in homescreen"
 echo "[*] You can sign in into iCloud now, also if you set passcode you will have to restore if you want to jailbreak with Palera1n again"
 sleep 2
 
+echo "[*] Restoring known_hosts file"
+
+echo
+echo "[?] Please enter your username (of this Mac) "
+read usernamemac
+sleep 1
+cd $script_path && cp " "$script_path/knownhosts/known_hosts" "/Users/$usernamemac/.ssh/
+sleep 3
+
 exit 1
