@@ -112,6 +112,8 @@ sleep 3
 
 if [ "$skip_rdboot" = true ]; then
     printr "[*] Skipped booting ramdisk as specified"
+    printg "[*] Press enter when you want to continue"
+    read skiprdbootdone
 else
     printg "[*] Booting ramdisk"
     cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh boot
