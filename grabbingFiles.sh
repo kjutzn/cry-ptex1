@@ -1,5 +1,24 @@
 #!/bin/bash
 
+skip_rdboot=false
+debug=false
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --skip-rdboot)
+      skip_rdboot=true
+      ;;
+    --debug)
+      debug=true
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
 printg() {
   printf "\e[32m$1\e[m\n"
 }
@@ -90,13 +109,17 @@ else
         echo
         printg " [*] Plug you device and trust it"
 
-        echo -e "\033[1;31m [!] New terminal window should pop up, follow instructions on entering DFU Mode \033[0m"
-        osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
+        if [ "$skip_rdboot" = true ]; then
+            printg " [*] Skipped booting ramdisk as specified"
+        else
+            echo -e "\033[1;31m [!] New terminal window should pop up, follow instructions on entering DFU Mode \033[0m"
+            osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
 
-        sleep 2
-        cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $ios1
-        printg " [*] Booting ramdisk"
-        cd $script_path/SSHRD_Script && ./sshrd.sh boot
+            sleep 2
+            cd "$script_path/SSHRD_Script" && chmod +x sshrd.sh && ./sshrd.sh "$ios1"
+            printg " [*] Booting ramdisk"
+            cd "$script_path/SSHRD_Script" && ./sshrd.sh boot
+        fi
 
         cd $script_path
 
@@ -151,7 +174,7 @@ else
         sleep 1
         ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/activation"
 
-        ## check needs to be added
+        ##check needs to be added
 
         sleep 3
 
