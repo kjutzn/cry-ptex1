@@ -210,18 +210,22 @@ else
 
         if [ -d "$script_path/activation" ]; then
             cd $script_path
+            mkdir activation_records
         else
-            cd $script_path/activation && mkdir activation_records
+            cd $script_path/activation
             sleep 1
             cd $script_path
         fi
+
 
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /mnt2/containers/Data/System
 
         ACT5=$(./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /mnt2/containers/Data/System -name activation_records)
         ACT6=$ACT5/activation_record.plist
-        sleep 1
+        sleep 5
 
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/activation"
+        sleep 3
         ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/activation/activation_records"
         sleep 2
         cp "$script_path/activation/activation_records/activation_record.plist" "$script_path/activation/"
@@ -232,6 +236,8 @@ else
             printg " [*] activation_record.plist downloaded successfully"
         else
             echo "\033[1;31m [!] activation_record.plist failed downloading. Download it manually \033[0m"
+            printr "[!] It is located here: "
+            printr $ACT6
         fi
         
         sleep 1
@@ -254,7 +260,6 @@ read partonedone
 if [ "$partonedone" = "y" ]; then
     printg " [*] Starting ./futurerestored.sh, also save activation folder just in case"
     printg " [*] Script is continuing in 10 seconds"
-    echo 
     sleep 10
     cd $script_path && ./futurerestored.sh
 else
