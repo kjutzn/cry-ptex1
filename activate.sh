@@ -36,7 +36,7 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
       printg " [*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
       printg " [*] When you finish checking press enter"
 
-      printg " [*] Files in .ssh directory are: "
+      printg " [*] Files in /.ssh directory are: "
       cd ${HOME}/.ssh/ && ls
 
       read donecheckinghostsidk
