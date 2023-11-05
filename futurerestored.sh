@@ -2,6 +2,7 @@
 
 skip_rdboot=false
 skip_ffs=false
+debug=false
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -11,6 +12,9 @@ while [ "$#" -gt 0 ]; do
     --skip-ffs)
       skip_ffs=true
       ;;
+    --debug)
+      debug=true
+      ;;
     *)
       echo "Unknown option: $1"
       exit 1
@@ -18,7 +22,6 @@ while [ "$#" -gt 0 ]; do
   esac
   shift
 done
-
 
 printg() {
   printf "\e[32m$1\e[m\n"
@@ -61,15 +64,24 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
     read savehosts
 
     if [ "$savehosts" = "a" ]; then
-        printg "[*] Saving automatically"
-        printg "[?] Please enter your username(of this mac): "
-        read usernamemac
+        printg " [*] Automatically getting hosts file location and copying it to script path"
 
-        cd $script_path && cp "/Users/$usernamemac/.ssh/known_hosts" "$script_path/"
+        cd $script_path && cp "${HOME}/.ssh/known_hosts" "$script_path/"
         sleep 2
 
         cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
-        sleep 2
+        sleep 2          
+
+        printg " [*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
+        printg " [*] When you finish checking press enter"
+
+        printg " [*] Files in .ssh directory are: "
+        cd ${HOME}/.ssh/ && ls
+
+        read donecheckinghostsidk
+        sleep 1
+
+        rm -rf ${HOME}/.ssh/known_hosts
 
     else
         printg "[*] Save known_hosts manually. Script will sleep for 60 seconds. "
@@ -118,6 +130,12 @@ else
     printg "[*] Booting ramdisk"
     cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh boot
     sleep 3
+fi
+
+if [ "$debug" = true ]; then
+    printy "[DEBUG] osascript -e tell application Terminal to do script ./sshrd.sh ssh"
+else
+    sleep 1
 fi
 
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
@@ -183,6 +201,13 @@ printg "[*] Device should reboot, also do not set passcode or sign in into iClou
 sleep 6
 printg "[*] Now you need to follow guide in another terminal window with instructions on jailbreaking with palera1n"
 
+
+if [ "$debug" = true ]; then
+    printy "[DEBUG] osascript -e tell application Terminal to do script palera1n -f"
+else
+    sleep 1
+fi
+
 osascript -e "tell application \"Terminal\" to do script \"palera1n -f\""
 printg "[*] Opened new Terminal window"
 printg "[*] Also if you are on Apple Silicon Mac, you need to replug the lightning cable when you see the Apple logo on the device"
@@ -205,6 +230,13 @@ cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh boot
 sleep 3
 
 printg "[*] SSH window should pop up"
+
+if [ "$debug" = true ]; then
+    printy "[DEBUG] osascript -e tell application Terminal to do script ./sshrd.sh ssh"
+else
+    sleep 1
+fi
+
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
 printr "[!] Do not close it"
 
@@ -231,6 +263,13 @@ printg "[*] Also, you can close all opened terminal windows, except this one"
 sleep 7
 
 printg "[*] Opened new palera1n window"
+
+if [ "$debug" = true ]; then
+    printy "[DEBUG] osascript -e tell application Terminal to do script palera1n -f"
+else
+    sleep 1
+fi
+
 osascript -e "tell application \"Terminal\" to do script \"palera1n -f\""
 printg "[*] Same as last time, if you are on Apple Silicon Mac, you need to replug the lightning cable when you see the Apple logo on the device"
 sleep 3

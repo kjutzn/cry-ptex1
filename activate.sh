@@ -25,20 +25,30 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
     read savehosts
 
     if [ "$savehosts" = "a" ]; then
-        printg "[*] Saving automatically"
-        printg "[?] Please enter your username(of this mac): "
-        read usernamemac
+      printg " [*] Automatically getting hosts file location and copying it to script path"
 
-        cd $script_path && cp "/Users/$usernamemac/.ssh/known_hosts" "$script_path/"
-        sleep 2
+      cd $script_path && cp "${HOME}/.ssh/known_hosts" "$script_path/"
+      sleep 2
 
-        cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
-        sleep 2
+      cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
+      sleep 2          
+
+      printg " [*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
+      printg " [*] When you finish checking press enter"
+
+      printg " [*] Files in /.ssh directory are: "
+      cd ${HOME}/.ssh/ && ls
+
+      read donecheckinghostsidk
+      sleep 1
+
+      rm -rf ${HOME}/.ssh/known_hosts
 
     else
         printg "[*] Save known_hosts manually. Script will sleep for 60 seconds. "
         printg "[*] Also it is located in /Users/username/.ssh/known_hosts"
-        sleep 60
+        printg "[*] Press enter when you are done."
+        read donesavinghostsidkyes
     fi
 
 else
@@ -52,14 +62,14 @@ sleep 1
 printg "[*] Opened new terminal window, DO NOT close it"
 osascript -e "tell application \"Terminal\" to do script \"$script_path/iproxy 2222 22\""
 
-printg "[*] Known hosts will get reseted. If you aren't alright with that close this script"
+printg "[*] Reseting known_hosts. Backup is stored in /knownhosts or in your manual backup."
 sleep 3
 
 chmod +x "$script_path"/SSHRD_Script/Darwin/sshpass
 
 printg "[*] Please enter your username(of this mac): "
 read usernamemac
-rm -rf /Users/$usernamemac/.ssh/known_hosts
+rm -rf ${HOME}/.ssh/known_hosts
 
 printg "[*] You might have to press allow for opening new terminal window"
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
@@ -177,7 +187,9 @@ sleep 2
 
 printg "[*] Restoring known_hosts file"
 sleep 1
-cd $script_path && cp "$script_path/knownhosts/known_hosts" "/Users/$usernamemac/.ssh/"
-sleep 3
+cd $script_path && ./main.sh --restorehosts
+sleep 1
+
+printg "[*] All done! Enjoy iOS 14/15."
 
 exit 1
