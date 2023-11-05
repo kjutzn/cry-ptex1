@@ -26,7 +26,8 @@ If you run into any issues, message me on Discord server, here is the [invite](h
 Support for linux will be added most likely next month, but until them you can replace binaries manually
 
 # Credits
-- [Orangera1n](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225) - Guide about activativating futurerestored idevices on ios 15
+- [Orangera1n](https://github.com/Orangera1n/) - Guide about activativating futurerestored idevices on ios 15
 - [Nathan](https://github.com/verygenericname/SSHRD_Script) - SSHRD script
 - [Edwin](https://github.com/edwin170) - Guided me thru this script and helped me fix few things in it
 - [Palera1n](https://github.com/palera1n/palera1n) - Used when creating fakefs
+- Also have in mind patched mobileactivationd is **NOT MINE** it is from [Orangera1n's gist](https://gist.github.com/Orangera1n/fa3ca03d6aa9f5be963fd3b72c3f4225)
