@@ -47,7 +47,8 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
     else
         printg "[*] Save known_hosts manually. Script will sleep for 60 seconds. "
         printg "[*] Also it is located in /Users/username/.ssh/known_hosts"
-        sleep 60
+        printg "[*] Press enter when you are done."
+        read donesavinghostsidkyes
     fi
 
 else
@@ -61,14 +62,14 @@ sleep 1
 printg "[*] Opened new terminal window, DO NOT close it"
 osascript -e "tell application \"Terminal\" to do script \"$script_path/iproxy 2222 22\""
 
-printg "[*] Known hosts will get reseted. If you aren't alright with that close this script"
+printg "[*] Reseting known_hosts. Backup is stored in /knownhosts or in your manual backup."
 sleep 3
 
 chmod +x "$script_path"/SSHRD_Script/Darwin/sshpass
 
 printg "[*] Please enter your username(of this mac): "
 read usernamemac
-rm -rf /Users/$usernamemac/.ssh/known_hosts
+rm -rf ${HOME}/.ssh/known_hosts
 
 printg "[*] You might have to press allow for opening new terminal window"
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
@@ -186,7 +187,9 @@ sleep 2
 
 printg "[*] Restoring known_hosts file"
 sleep 1
-cd $script_path && cp "$script_path/knownhosts/known_hosts" "/Users/$usernamemac/.ssh/"
-sleep 3
+cd $script_path && ./main.sh --restorehosts
+sleep 1
+
+printg "[*] All done! Enjoy iOS 14/15."
 
 exit 1
