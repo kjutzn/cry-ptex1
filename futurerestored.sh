@@ -64,15 +64,24 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
     read savehosts
 
     if [ "$savehosts" = "a" ]; then
-        printg "[*] Saving automatically"
-        printg "[?] Please enter your username(of this mac): "
-        read usernamemac
+        printg " [*] Automatically getting hosts file location and copying it to script path"
 
-        cd $script_path && cp "/Users/$usernamemac/.ssh/known_hosts" "$script_path/"
+        cd $script_path && cp "${HOME}/.ssh/known_hosts" "$script_path/"
         sleep 2
 
         cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
-        sleep 2
+        sleep 2          
+
+        printg " [*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
+        printg " [*] When you finish checking press enter"
+
+        printg " [*] Files in .ssh directory are: "
+        cd ${HOME}/.ssh/ && ls
+
+        read donecheckinghostsidk
+        sleep 1
+
+        rm -rf ${HOME}/.ssh/known_hosts
 
     else
         printg "[*] Save known_hosts manually. Script will sleep for 60 seconds. "
