@@ -2,6 +2,7 @@
 
 skip_rdboot=false
 debug=false
+restorehosts=false
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -10,6 +11,9 @@ while [ "$#" -gt 0 ]; do
       ;;
     --debug)
       debug=true
+      ;;
+    --restorehosts)
+      restorehosts=true
       ;;
     *)
       echo "Unknown option: $1"
@@ -42,6 +46,23 @@ printg
 printg " Please open the guide in another tab and follow it!"
 printg " If you need any help or run into any problems, open an issue on GitHub or contact me on Discord."
 printg 
+
+if [ "$restorehosts" = true ]; then
+    printg " [*] Restoring known_hosts file"
+    cd $script_path/knownhosts && cp "$script_path/knownhosts/known_hosts" "${HOME}/.ssh/known_hosts"
+
+    sleep 3
+    printg " [!] known_hosts should be copied to ${HOME}/.ssh/known_hosts, Please check if they are in there"
+
+    printg " [!] Files in .ssh directory are: "
+
+    cd ${HOME}/.ssh/ && ls
+    sleep 1
+
+    exit 120
+else
+    cd $script_path
+fi
 
 printg " [?] What version is your iDevice on?"
 read ios1
@@ -142,23 +163,28 @@ else
         read resethosts
 
         if [ "$resethosts" = "y" ]; then
-            echo
-            printg "[?] Please enter your username(of this mac): "
-            read usernamemac
 
-            cd $script_path && cp "/Users/$usernamemac/.ssh/known_hosts" "$script_path/"
+            printg " [*] Automatically getting hosts file location and copying it to script path"
+
+            cd $script_path && cp "${HOME}/.ssh/known_hosts" "$script_path/"
             sleep 2
 
             cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
             sleep 2          
 
-            rm -rf /Users/$usernamemac/.ssh/known_hosts
+            printg " [*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
+            printg " [*] When you finish checking press enter"
+
+            read donecheckinghostsidk
+            sleep 1
+
+            rm -rf ${HOME}/.ssh/known_hosts
             
         else
             printg " [*] Trying without reseting known_hosts!"
         fi
 
-        sleep 2
+        sleep 1
 
         printg " [*] You might have to press allow for opening new terminal window"
         osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
@@ -174,7 +200,40 @@ else
         sleep 1
         ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/activation"
 
-        ##check needs to be added
+        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sidb" ]; then
+            printg " [*] IC-Info.sidb downloaded successfully"
+        else
+            printr " [!] IC-Info.sidb failed downloading. Download it manually."
+            printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
+        fi
+
+        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sido" ]; then
+            printg " [*] IC-Info.sido downloaded successfully"
+        else
+            printr " [!] IC-Info.sido failed downloading. Download it manually."
+            printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
+        fi
+
+        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sidt" ]; then
+            printg " [*] IC-Info.sidt downloaded successfully"
+        else
+            printr " [!] IC-Info.sidt failed downloading. Download it manually."
+            printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
+        fi
+
+        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sisb" ]; then
+            printg " [*] IC-Info.sisb downloaded successfully"
+        else
+            printr " [!] IC-Info.sisb failed downloading. Download it manually."
+            printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
+        fi
+
+        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sisv" ]; then
+            printg " [*] IC-Info.sisv downloaded successfully"
+        else
+            printr " [!] IC-Info.sisv failed downloading. Download it manually."
+            printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
+        fi
 
         sleep 3
 
