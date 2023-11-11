@@ -166,7 +166,9 @@ sleep 5
 printg "[*] Repairing permissions"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chown root:mobile /var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist 
 sleep 1
-./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chmod 755 /var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chflags uchg /var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist
+./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chmod 755 /var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist 
+sleep 1
+./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chflags uchg /var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist
 sleep 1
 
 printg "[*] Replaced all files, unloading mobileactivationd"
