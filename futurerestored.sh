@@ -138,12 +138,14 @@ else
     sleep 1
 fi
 
+pring "[*] Waiting for ramdisk to finish booting."
+sleep 25
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
 printr "[!] Do not close sshrd ssh terminal"
 
 printg "[*] Mounting filesystems"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_filesystems
-sleep 3
+sleep 5
 
 printg "[?] Does your device have Baseband? (y/n)"
 printg "[*] Enter y if it isn't iPad"
@@ -167,7 +169,7 @@ printg "[*] Renaming mobileactivationd to mobileactivationd_backup"
 sleep 1
 
 printg "[*] Downloading required files."
-curl -o "$script_path/mobileactivationd" "https://cdn.discordapp.com/attachments/1020892312756293695/1102082543253205012/mobileactivationd"
+printg "[!] Download mobileactivationd and place it in $script_path"
 sleep 3
 
 if [ ! -f "$script_path/mobileactivationd" ]; then
@@ -193,7 +195,7 @@ sleep 2
 printg "[*] Resigning files"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /mnt8
 sleep 2
-./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 ldid -Sents.xml /mnt8/usr/libexec/mobileactivationd
+./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 ldid -S/mnt8/ents.xml /mnt8/usr/libexec/mobileactivationd
 sleep 2
 
 printg "[*] Device should reboot, also do not set passcode or sign in into iCloud yet"
@@ -225,6 +227,9 @@ printg
 printg "[*] Enter enter when you finish installing openssh"
 read installingbootstrap
 
+printg "[*] New terminal window should pop up, follow it's entering dfu guide"
+osascript -e "tell application \"Terminal\" to do script \"palera1n -D\""
+
 printg "[*] Booting ramdisk"
 cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh boot
 sleep 3
@@ -236,6 +241,9 @@ if [ "$debug" = true ]; then
 else
     sleep 1
 fi
+
+printg "[*] Waiting for ramdisk to finish booting"
+sleep 25
 
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
 printr "[!] Do not close it"
@@ -257,7 +265,7 @@ printg "[*] Restoring old mobileactivationd"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mv /mnt8/usr/libexec/mobileactivationd_backup /mnt8/usr/libexec/mobileactivationd
 sleep 2
 
-printr "[!] Rebooting, after jailbreak finishes jailbreak with palera1n"
+printr "[!] Rebooting, new terminal window should be opened, follow guide to enter DFU mode"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 reboot
 printg "[*] Also, you can close all opened terminal windows, except this one"
 sleep 7
