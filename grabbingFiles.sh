@@ -184,7 +184,7 @@ else
             printg " [*] Trying without reseting known_hosts!"
         fi
 
-        sleep 1
+        sleep 10
 
         printg " [*] You might have to press allow for opening new terminal window"
         osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
@@ -268,8 +268,7 @@ else
         cd $script_path/activation
 
         if [ -d "$script_path/activation" ]; then
-            cd $script_path
-            mkdir activation_records
+            cd $script_path/activation && mkdir activation_records
         else
             cd $script_path/activation
             sleep 1
