@@ -118,6 +118,7 @@ read _iosdowngraded
 sleep 3
 
 printg "[*] Creating ramdisk for $_iosdowngraded"
+palera1n --dfuhelper
 
 cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $_iosdowngraded
 sleep 3
