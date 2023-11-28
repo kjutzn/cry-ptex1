@@ -140,7 +140,7 @@ else
 fi
 
 pring "[*] Waiting for ramdisk to finish booting."
-sleep 25
+sleep 30
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
 printr "[!] Do not close sshrd ssh terminal"
 
