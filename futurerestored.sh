@@ -118,7 +118,6 @@ read _iosdowngraded
 sleep 3
 
 printg "[*] Creating ramdisk for $_iosdowngraded"
-palera1n --dfuhelper
 
 cd $script_path/SSHRD_Script && chmod +x sshrd.sh && ./sshrd.sh $_iosdowngraded
 sleep 3
@@ -140,7 +139,7 @@ else
 fi
 
 pring "[*] Waiting for ramdisk to finish booting."
-sleep 30
+sleep 25
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
 printr "[!] Do not close sshrd ssh terminal"
 
@@ -166,10 +165,9 @@ printg "[*] ldid mobileactivationd"
 sleep 1
 
 printg "[*] Renaming mobileactivationd to mobileactivationd_backup"
-./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mv /mnt8/usr/libexec/mobileactivationd_backup /mnt8/usr/libexec/mobileactivationd
+./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mv /mnt8/usr/libexec/mobileactivationd /mnt8/usr/libexec/mobileactivationd_backup
 sleep 1
 
-printg "[*] Downloading required files."
 printg "[!] Download mobileactivationd and place it in $script_path"
 sleep 3
 
