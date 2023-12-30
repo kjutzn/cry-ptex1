@@ -1,3 +1,20 @@
+#!/bin/bash
+
+skip_rdboot=false
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --skip-rdboot)
+      skip_rdboot=true
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
 script_path="$(cd "$(dirname "$0")" && pwd)"
 
 printg() {
@@ -12,6 +29,10 @@ printr() {
   echo -e "\033[1;31m$1\033[0m"
 }
 
+printg "[*] Reseting known_hosts. Make sure to backup it manually before running this script if it is important!"
+printr "[!] Press enter when ready to continue! "
+read readytocontinue1
+
 if [ -d "$script_path/knownhosts" ]; then
     cd $script_path
 else
@@ -25,7 +46,7 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
     read savehosts
 
     if [ "$savehosts" = "a" ]; then
-      printg " [*] Automatically getting hosts file location and copying it to script path"
+      printg "[*] Automatically getting hosts file location and copying it to script path"
 
       cd $script_path && cp "${HOME}/.ssh/known_hosts" "$script_path/"
       sleep 2
@@ -33,10 +54,10 @@ if [ ! -f "$script_path/knownhosts/known_hosts" ]; then
       cd $script_path && cp "$script_path/known_hosts" "$script_path/knownhosts/"  
       sleep 2          
 
-      printg " [*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
-      printg " [*] When you finish checking press enter"
+      printg "[*] Please check if known_hosts file exists in /knownhosts folder. If it doesn't copy it by yourself!"
+      printg "[*] When you finish checking press enter"
 
-      printg " [*] Files in /.ssh directory are: "
+      printg "[*] Files in /.ssh directory are: "
       cd ${HOME}/.ssh/ && ls
 
       read donecheckinghostsidk
@@ -56,18 +77,70 @@ else
     sleep 1
 fi
 
-printg "[*] Reseting known_hosts. Backup is stored in /knownhosts or in your manual backup."
-sleep 3
-
 chmod +x "$script_path"/SSHRD_Script/Darwin/sshpass
-
-printg "[*] Please enter your username(of this mac): "
-read usernamemac
 rm -rf ${HOME}/.ssh/known_hosts
+
+printg "[?] What version is your iDevice on?"
+read ios1
+printg
+
+if [ -d "$script_path/SSHRD_Script" ]; then
+    printg " [*] SSHRD_Script exists in the script's directory."
+    cd "$script_path/SSHRD_Script" && git pull
+
+else
+    echo -e "\033[1;31m[!] The folder SSHRD_Script does not exist in the script's directory. Exiting the program. \033[0m"
+    echo -e "\033[1;31m[!] This tool depends on SSHRD_Script by Nathan. \033[0m"
+    echo
+
+    printg "[?] Do you want to install it now? (y/n)"
+    read installsshrd
+
+    if [ "$installsshrd" = "y" ]; then
+        echo " [*] Cloning SSHRD_Script... Please wait!"
+        git clone https://github.com/verygenericname/SSHRD_Script --recursive
+        cd "$script_path/SSHRD_Script" && git pull
+
+    else
+        echo -e "\033[1;31m[!] Exit code: 100 \033[0m"
+        exit 100
+    fi
+fi
+
+if [ ! -f "$script_path/sshpass" ]; then
+    cp "$script_path/SSHRD_Script/Darwin/sshpass" "$script_path/"
+    printg "[*] Copying sshpass to script path (Will be needed for later)"
+else
+    cd $script_path
+fi
+
+if [ ! -f "$script_path/iproxy" ]; then
+    cp "$script_path/SSHRD_Script/Darwin/iproxy" "$script_path/"
+    printg "[*] Copying iproxy to script path (Will be needed for later)"
+
+else
+    cd $script_path
+fi
+
+printg "[*] Creating Ramdisk, make sure that your iDevice is in DFU mode"
+printg "[*] If it isn't do palera1n --dfuhelper in another terminal window."
+sleep 1
+
+
+if [ "$skip_rdboot" = true ]; then
+    printg "[*] Skipped booting ramdisk as specified"
+else
+    printg "[*] Creating Ramdisk"
+    cd "$script_path/SSHRD_Script" && chmod +x sshrd.sh && ./sshrd.sh "$ios1"
+    printg "[*] Booting ramdisk"
+    cd "$script_path/SSHRD_Script" && ./sshrd.sh boot
+fi
 
 printg "[*] You might have to press allow for opening new terminal window"
 osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
 printr "[!] Do not close it, and make sure that ssh is successfully connected!"
+printg "[*] Press enter when everything is ready. "
+read rdbready
 
 printg "[*] Deleting previous activation files"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 rm -rf /mnt2/mobile/Media/Downloads/1
@@ -75,7 +148,7 @@ sleep 1
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 rm -rf /mnt2/mobile/Media/1
 sleep 1
 
-printg "[*] Making directory /var/mobile/Media/Downloads/1"
+printg "[*] Making directory /mnt2/mobile/Media/Downloads/1"
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mkdir /mnt2/mobile/Media/Downloads/1
 sleep 1
 
@@ -86,7 +159,7 @@ read checkifactivationfolder
 sleep 1
 
 printg "[*] Moving activation files to /mnt2/mobile/Media/1"
-./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mv -f /mnt2/mobile/Media/Downloads/1 /var/mobile/Media
+./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mv -f /mnt2/mobile/Media/Downloads/1 /mnt2/mobile/Media
 sleep 3
 
 printg "[*] Fixing permisions of activation folder"
@@ -183,7 +256,7 @@ sleep 2
 
 printg "[*] Restoring known_hosts file"
 sleep 1
-cd $script_path && ./main.sh --restorehosts
+cd $script_path && ./grabbingFiles.sh --restorehosts
 sleep 1
 
 printg "[*] All done! Enjoy iOS 14/15."
