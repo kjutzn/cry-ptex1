@@ -40,7 +40,7 @@ script_path="$(cd "$(dirname "$0")" && pwd)"
 printg " == Cry ptex1 =="
 printg
 printg " Made by Kjutzn"
-printg " Thanks to Orangera1n, VeryGenericName (ssh), Palera1n"
+printg " Thanks to Orangera1n, VeryGenericName)"
 printg " This tool DOES NOT work on iPhone X, due to sep breaking restores."
 printg
 printg " Please open the guide in another tab and follow it!"
@@ -113,18 +113,18 @@ else
     cd $script_path
 fi
 
-printg " [?] Do you have activation files? (y/n)"
+printg " [?] Do you have Activation files? (y/n)"
 read act_have
 
-if [ -d "$script_path/activation" ]; then
+if [ -d "$script_path/Activation" ]; then
     cd $script_path
 else
-    cd $script_path && mkdir activation
+    cd $script_path && mkdir Activation
 
 fi
 
 if [ "$act_have" = "y" ]; then
-        printg " [*] Copy them to: $script_path/activation"        
+        printg " [*] Copy them to: $script_path/Activation"        
 
 else
         echo
@@ -198,37 +198,37 @@ else
 
         printg " [*] Connecting to your device. Downloading Fairplay folder... "
         sleep 1
-        ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 -r root@localhost:/mnt2/mobile/Library/FairPlay "$script_path/Activation"
 
-        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sidb" ]; then
+        if [ -e "$script_path/Activation/FairPlay/iTunes_Control/iTunes/IC-Info.sidb" ]; then
             printg " [*] IC-Info.sidb downloaded successfully"
         else
             printr " [!] IC-Info.sidb failed downloading. Download it manually."
             printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
         fi
 
-        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sido" ]; then
+        if [ -e "$script_path/Activation/FairPlay/iTunes_Control/iTunes/IC-Info.sido" ]; then
             printg " [*] IC-Info.sido downloaded successfully"
         else
             printr " [!] IC-Info.sido failed downloading. Download it manually."
             printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
         fi
 
-        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sidt" ]; then
+        if [ -e "$script_path/Activation/FairPlay/iTunes_Control/iTunes/IC-Info.sidt" ]; then
             printg " [*] IC-Info.sidt downloaded successfully"
         else
             printr " [!] IC-Info.sidt failed downloading. Download it manually."
             printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
         fi
 
-        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sisb" ]; then
+        if [ -e "$script_path/Activation/FairPlay/iTunes_Control/iTunes/IC-Info.sisb" ]; then
             printg " [*] IC-Info.sisb downloaded successfully"
         else
             printr " [!] IC-Info.sisb failed downloading. Download it manually."
             printr " [!] If it doesn't exist in /mnt2/mobile/Library/FairPlay you can skip this file"
         fi
 
-        if [ -e "$script_path/activation/FairPlay/iTunes_Control/iTunes/IC-Info.sisv" ]; then
+        if [ -e "$script_path/Activation/FairPlay/iTunes_Control/iTunes/IC-Info.sisv" ]; then
             printg " [*] IC-Info.sisv downloaded successfully"
         else
             printr " [!] IC-Info.sisv failed downloading. Download it manually."
@@ -239,9 +239,9 @@ else
 
         printg " [*] Downloading commcenter.device_specific_nobackup.plist "
         sleep 1
-        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:/mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist "$script_path/Activation"
 
-        if [ -e "$script_path/activation/com.apple.commcenter.device_specific_nobackup.plist" ]; then
+        if [ -e "$script_path/Activation/com.apple.commcenter.device_specific_nobackup.plist" ]; then
             printg " [*] com.apple.commcenter.device_specific_nobackup.plist downloaded successfully"
         else
             echo -e "\033[1;31m [!] com.apple.commcenter.device_specific_nobackup.plist failed downloading. Download it manually \033[0m"
@@ -254,9 +254,9 @@ else
         ACT1=$(./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /mnt2/containers/Data/System -name internal)
         ACT3=$ACT1/data_ark.plist
         sleep 1
-        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT3 "$script_path/activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT3 "$script_path/Activation"
 
-        if [ -e "$script_path/activation/data_ark.plist" ]; then
+        if [ -e "$script_path/Activation/data_ark.plist" ]; then
             printg " [*] data_ark.plist downloaded successfully"
         else
             echo "\033[1;31m [!] data_ark.plist failed downloading. Download it manually \033[0m"
@@ -264,13 +264,13 @@ else
 
         sleep 1
 
-        printg " [*] Downloading activation_record.plist"
-        cd $script_path/activation
+        printg " [*] Downloading Activation_record.plist"
+        cd $script_path/Activation
 
-        if [ -d "$script_path/activation" ]; then
-            cd $script_path/activation && mkdir activation_records
+        if [ -d "$script_path/Activation" ]; then
+            cd $script_path/Activation && mkdir Activation_records
         else
-            cd $script_path/activation
+            cd $script_path/Activation
             sleep 1
             cd $script_path
         fi
@@ -278,33 +278,33 @@ else
 
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /mnt2/containers/Data/System
 
-        ACT5=$(./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /mnt2/containers/Data/System -name activation_records)
-        ACT6=$ACT5/activation_record.plist
+        ACT5=$(./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /mnt2/containers/Data/System -name Activation_records)
+        ACT6=$ACT5/Activation_record.plist
         sleep 5
 
-        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/activation"
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/Activation"
         sleep 3
-        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/activation/activation_records"
+        ./sshpass -p 'alpine' sftp -oPort=2222 root@localhost:$ACT6 "$script_path/Activation/Activation_records"
         sleep 2
-        cp "$script_path/activation/activation_records/activation_record.plist" "$script_path/activation/"
+        cp "$script_path/Activation/Activation_records/Activation_record.plist" "$script_path/Activation/"
         
         sleep 2
         
-        if [ -e "$script_path/activation/activation_records/activation_record.plist" ]; then
-            printg " [*] activation_record.plist downloaded successfully"
+        if [ -e "$script_path/Activation/Activation_records/Activation_record.plist" ]; then
+            printg " [*] Activation_record.plist downloaded successfully"
         else
-            echo "\033[1;31m [!] activation_record.plist failed downloading. Download it manually \033[0m"
+            echo "\033[1;31m [!] Activation_record.plist failed downloading. Download it manually \033[0m"
             printr "[!] It is located here: "
             printr $ACT6
         fi
         
         sleep 1
 
-        printg " [*] Check if Fairplay folder, com.apple.commcenter.device_specific_nobackup.plist, activation_record.plist exist in activation folder!"
+        printg " [*] Check if Fairplay folder, com.apple.commcenter.device_specific_nobackup.plist, Activation_record.plist exist in Activation folder!"
         sleep 5
         
         echo
-        printg " [*] Finished downloading activation files, also you can close ssh and palera1n terminal"
+        printg " [*] Finished downloading Activation files, also you can close ssh and palera1n terminal"
         sleep 1
     
 fi
@@ -316,7 +316,7 @@ printg " [?] Continue? (y/n)"
 read partonedone
 
 if [ "$partonedone" = "y" ]; then
-    printg " [*] Starting ./futurerestored.sh, also save activation folder just in case"
+    printg " [*] Starting ./futurerestored.sh, also save Activation folder just in case"
     printg " [*] Script is continuing in 10 seconds"
     sleep 10
     cd $script_path && ./futurerestored.sh
