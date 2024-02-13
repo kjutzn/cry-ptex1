@@ -1,4 +1,4 @@
-# FutureRestoring A11 Guide
+# Fix failed to activate when downgrading with iOS 16/17 sep
 
 # Prerequsites
 1. A computer running macOS
@@ -18,6 +18,7 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 # Have in mind before using
 1. If you are already on iOS 15.0-15.4.1 or any 14.x version, i wouldn't advise you to use this script, check [Possible Issues](https://github.com/kjutzn/cry-ptex1/blob/main/Guides/PossibleIssues.md) in Guides folder
 2. Also if signing in into iCloud doesn't work try grabing new activation files (from latest iOS 16 version) and redoing whole script
+3. If you are on iOS 17, use filza for obtaining files, if you need any help with that join Discord.
 
 # Help
 If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/buPefAxnVn)
