@@ -80,9 +80,13 @@ fi
 chmod +x "$script_path"/SSHRD_Script/Darwin/sshpass
 rm -rf ${HOME}/.ssh/known_hosts
 
-printg "[?] What version is your iDevice on?"
-read ios1
-printg
+if [ "$skip_rdboot" = true ]; then
+    printg "[*] Make sure to create ramdisk for your version if you haven't used futurerestored.sh!"
+else
+    printg "[?] What version is your iDevice on?"
+    read ios1
+    printg
+fi
 
 if [ -d "$script_path/SSHRD_Script" ]; then
     printg " [*] SSHRD_Script exists in the script's directory."
@@ -137,7 +141,13 @@ else
 fi
 
 printg "[*] You might have to press allow for opening new terminal window"
-osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
+
+if [ "$skip_rdboot" = true ]; then
+    printg "[*] Terminal window with ssh should already be opened"
+else
+  osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
+fi
+
 printr "[!] Do not close it, and make sure that ssh is successfully connected!"
 printg "[*] Press enter when everything is ready. "
 read rdbready
@@ -236,14 +246,6 @@ sleep 1
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chmod 755 /mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist 
 sleep 1
 ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 chflags uchg /mnt2/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist
-sleep 1
-
-printg "[*] Replaced all files, unloading mobileactivationd"
-./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 launchctl unload /System/Library/LaunchDaemons/com.apple.mobileactivationd.plist 
-sleep 1
-
-printg "[*] Reloading mobileactivationd"
-./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 launchctl load /System/Library/LaunchDaemons/com.apple.mobileactivationd.plist
 sleep 1
 
 printg "[*] Rebooting"
