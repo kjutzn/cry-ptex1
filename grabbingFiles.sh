@@ -190,7 +190,8 @@ else
         osascript -e "tell application \"Terminal\" to do script \"cd $script_path/SSHRD_Script && ./sshrd.sh ssh\""
         echo -e "\033[1;31m [!] Do not close opened Terminal window \033[0m"
         echo
-
+        printg "[?] Press enter if ssh works in other terminal"
+        read sshworksinsshrd1
         
         printg " [*] Mounting filesystems"
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 mount_filesystems
