@@ -276,7 +276,7 @@ else
             cd $script_path
         fi
 
-
+        cd $script_path
         ./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 cd /mnt2/containers/Data/System
 
         ACT5=$(./sshpass -p alpine ssh -o StrictHostKeyChecking=no root@localhost -p 2222 find /mnt2/containers/Data/System -name Activation_records)
