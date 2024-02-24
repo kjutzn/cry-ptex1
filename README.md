@@ -1,11 +1,8 @@
 # Fix failed to activate when downgrading with iOS 16/17 sep
 
-# This is **BETA** branch that isn't using palera1n at all, it will be pushed into main when is stable enough
-
 # Prerequsites
 1. A computer running macOS
 2. A11 device(iPhone X **isn't** supported)
-3. Have [Palera1n](https://github.com/palera1n/palera1n) installed
 
 # Disclamer
 This script is for educational purposes. I am aware people might use this to bypass iCloud, but I am NOT encouraging you to bypass iCloud and you **shouldn't do that**. This guide is **legitametly** activating it!
@@ -26,7 +23,7 @@ ALSO: This script is for advanced users, i am not responsable if your device bec
 If you run into any issues, message me on Discord server, here is the [invite](https://discord.gg/buPefAxnVn)
 
 # Linux
-Support for linux will be added most likely next month, but until then you can replace binaries manually
+Support for linux isn't planned but you can just replace binaries in /Darwin folder from sshrd script with /Linux or manually do all commands from script
 
 # Credits
 - [Orangera1n](https://github.com/Orangera1n/) - Guide about activativating futurerestored idevices on ios 15
