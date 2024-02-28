@@ -29,3 +29,4 @@ ALSO: This script is for advanced users, i am not responsible if your device bec
 - [Orangera1n](https://github.com/Orangera1n/) - Guide about activating futurerestored idevices on iOS 15
 - [Nathan](https://github.com/verygenericname/SSHRD_Script) - SSHRD script
 - [Edwin](https://github.com/edwin170) - Guided me through this script and helped me fix few things in it
+- [Sasa](https://github.com/sasa8810) - Idea and few parts of code using only sshrd
